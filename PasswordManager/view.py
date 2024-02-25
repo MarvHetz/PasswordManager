@@ -53,8 +53,9 @@ class View:
         service = self.entry_service.get()
         username = self.entry_username.get()
         password = self.entry_password.get()
+        domain = self.entry_domain.get()
 
-        self.__listener.on_save(service, username, password)
+        self._listener.on_save(service, username, password, domain)
 
     def _print_service_data(self, event):
         selected_index = self.listbox_services.curselection()
@@ -63,4 +64,4 @@ class View:
 
 
     def set_listener(self, listener : ViewListener):
-        self.__listener = listener
+        self._listener = listener

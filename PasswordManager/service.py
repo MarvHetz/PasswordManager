@@ -3,7 +3,8 @@ class Service:
     _username : str
     _password : str
     _domain : str
-    def __init__(self,service,username,password,domain):
+
+    def __init__(self, service, username, password, domain):
         self._service = service
         self._username = username
         self._password = password
