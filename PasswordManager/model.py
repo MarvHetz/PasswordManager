@@ -2,14 +2,17 @@ import time
 import pyperclip
 import threading
 from service import Service
+from dbcontroller import DBController
 
 
 class Model:
     __service_list = []
     __thread1 : threading
+    __dbcontroller : DBController
 
     def __init__(self):
         self.__service_list = []
+        self.__dbcontroller = DBController.get_instance()
 
     @property
     def service_list(self) -> list:
