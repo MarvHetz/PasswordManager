@@ -23,11 +23,14 @@ class Controller(ViewListener):
         else:
             messagebox.showinfo("ERROR", "ERROR!")
 
-    def on_double_click(self, item):
-        if item:
-            messagebox.showinfo("Service Data", f"Service: {item}\nUsername: <username>\nPassword: <password>")
+    def on_double_click(self, index):
+        if index:
+            self._model.copy_password_to_clipboard(index)
         else:
             messagebox.showerror("Error", "Please select a service.")
 
     def on_ctrl_c(self, index):
-        self._model.copy_domain_to_clipboard(index)
+        if index:
+            self._model.copy_domain_to_clipboard(index)
+        else:
+            messagebox.showerror("Error", "Please select a service.")

@@ -50,8 +50,7 @@ class View:
 
     def _control_c(self):
         selected_index = self.listbox_services.curselection()
-        if selected_index:
-            self._listener.on_ctrl_c(selected_index)
+        self._listener.on_ctrl_c(selected_index)
 
     def _save_password(self):
         service = self.entry_service.get()
@@ -61,10 +60,9 @@ class View:
 
         self._listener.on_save(service, username, password, domain)
 
-    def _print_service_data(self):
+    def _print_service_data(self, event):
         selected_index = self.listbox_services.curselection()
-        if selected_index:
-            self.__listener.on_double_click(selected_index)
+        self._listener.on_double_click(selected_index)
 
 
 
