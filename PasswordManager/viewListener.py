@@ -6,9 +6,9 @@ class ViewListener(ABC):
         pass
 
     @abstractmethod
-    def on_double_click (self, item):
+    def on_double_click (self, index):
         pass
 
     @abstractmethod
-    def on_ctrl_c (self, item):
+    def on_ctrl_c (self, index):
         pass

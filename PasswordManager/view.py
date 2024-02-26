@@ -1,11 +1,11 @@
 import tkinter as tk
-from tkinter import messagebox
 from viewListener import ViewListener
 
 class View:
 
     _listener : ViewListener
-    def __init__(self, master):
+    _listbox_listvar : tk.StringVar
+    def __init__(self, master, serviceList):
         self.master = master
         self.master.title("Password Manager")
 
@@ -39,8 +39,9 @@ class View:
         self.label_services = tk.Label(master, text="Saved Services:")
         self.label_services.grid(row=0, column=2, padx=5, pady=5, sticky="e")
 
+        self._listbox_listvar = tk.StringVar(value=serviceList)
         self.listbox_scrollbar = tk.Scrollbar(master, orient=tk.VERTICAL)
-        self.listbox_services = tk.Listbox(master, width=30, height=10, yscrollcommand=self.listbox_scrollbar.set)
+        self.listbox_services = tk.Listbox(master, width=30, height=10, yscrollcommand=self.listbox_scrollbar.set, selectmode=tk.SINGLE, listvariable=self._listbox_listvar)
         self.listbox_scrollbar.config(command=self.listbox_services.yview)
         self.listbox_scrollbar.grid(row=1, column=3, rowspan=4, padx=0, pady=5, sticky="ns")
         self.listbox_services.grid(row=1, column=2, rowspan=4, padx=5, pady=5, sticky="nsew")
@@ -48,7 +49,10 @@ class View:
         self.listbox_services.bind("<Double-Button-1>", self._print_service_data)
 
     def _control_c(self):
-        print("Ctrl+C pressed")
+        selected_index = self.listbox_services.curselection()
+        if selected_index:
+            self._listener.on_ctrl_c(selected_index)
+
     def _save_password(self):
         service = self.entry_service.get()
         username = self.entry_username.get()
@@ -57,11 +61,16 @@ class View:
 
         self._listener.on_save(service, username, password, domain)
 
-    def _print_service_data(self, event):
+    def _print_service_data(self):
         selected_index = self.listbox_services.curselection()
-        service = self.listbox_services.get(selected_index)
-        self.__listener.on_double_click(service)
+        if selected_index:
+            self.__listener.on_double_click(selected_index)
+
 
 
     def set_listener(self, listener : ViewListener):
         self._listener = listener
+
+    def update_listbox(self, serviceList):
+        self._listbox_listvar.set(serviceList)
+        self.listbox_services.update
