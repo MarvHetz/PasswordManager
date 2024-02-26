@@ -45,12 +45,13 @@ class View:
         self.listbox_scrollbar.config(command=self.listbox_services.yview)
         self.listbox_scrollbar.grid(row=1, column=3, rowspan=4, padx=0, pady=5, sticky="ns")
         self.listbox_services.grid(row=1, column=2, rowspan=4, padx=5, pady=5, sticky="nsew")
-        self.listbox_services.bind("<Control-c>", lambda x: self._control_c())
-        self.listbox_services.bind("<Double-Button-1>", self._print_service_data)
+        self.listbox_services.bind("<Control-d>", lambda x: self._on_control_d())
+        self.listbox_services.bind("<Double-Button-1>", self._on_double_click)
+        self.listbox_services.bind("<Control-c>", self._on_control_c)
 
-    def _control_c(self):
+    def _on_control_d(self):
         selected_index = self.listbox_services.curselection()
-        self._listener.on_ctrl_c(selected_index)
+        self._listener.on_ctrl_d(selected_index)
 
     def _save_password(self):
         service = self.entry_service.get()
@@ -60,15 +61,16 @@ class View:
 
         self._listener.on_save(service, username, password, domain)
 
-    def _print_service_data(self, event):
+    def _on_double_click(self, event):
         selected_index = self.listbox_services.curselection()
         self._listener.on_double_click(selected_index)
-
-
 
     def set_listener(self, listener : ViewListener):
         self._listener = listener
 
     def update_listbox(self, serviceList):
         self._listbox_listvar.set(serviceList)
-        self.listbox_services.update
+
+    def _on_control_c(self, event):
+        selected_index = self.listbox_services.curselection()
+        self._listener.on_ctrl_c(selected_index)

@@ -29,8 +29,14 @@ class Controller(ViewListener):
         else:
             messagebox.showerror("Error", "Please select a service.")
 
-    def on_ctrl_c(self, index):
+    def on_ctrl_d(self, index):
         if index:
             self._model.copy_domain_to_clipboard(index)
+        else:
+            messagebox.showerror("Error", "Please select a service.")
+
+    def on_ctrl_c(self, index):
+        if index:
+            self._model.copy_email_to_clipboard(index)
         else:
             messagebox.showerror("Error", "Please select a service.")
