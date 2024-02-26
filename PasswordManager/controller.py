@@ -5,38 +5,38 @@ from view import View
 from model import Model
 class Controller(ViewListener):
 
-    _view : View
-    _model : Model
+    __view : View
+    __model : Model
     def __init__(self):
 
         root = tk.Tk()
-        self._model = Model()
-        serviceList = self._model.serviceList
-        self._view = View(root, serviceList)
-        self._view.set_listener(self)
+        self.__model = Model()
+        serviceList = self.__model.service_list
+        self.__view = View(root, serviceList)
+        self.__view.set_listener(self)
         root.mainloop()
 
     def on_save(self, service, username, password, domain):
         if service and username and password and domain:
-           self._model.add_entry(service, username, password, domain)
-           self._view.update_listbox(self._model.serviceList)
+           self.__model.add_entry(service, username, password, domain)
+           self.__view.update_listbox(self.__model.service_list)
         else:
             messagebox.showinfo("ERROR", "ERROR!")
 
     def on_double_click(self, index):
         if index:
-            self._model.copy_password_to_clipboard(index)
+            self.__model.copy_password_to_clipboard(index)
         else:
             messagebox.showerror("Error", "Please select a service.")
 
     def on_ctrl_d(self, index):
         if index:
-            self._model.copy_domain_to_clipboard(index)
+            self.__model.copy_domain_to_clipboard(index)
         else:
             messagebox.showerror("Error", "Please select a service.")
 
     def on_ctrl_c(self, index):
         if index:
-            self._model.copy_email_to_clipboard(index)
+            self.__model.copy_username_to_clipboard(index)
         else:
             messagebox.showerror("Error", "Please select a service.")

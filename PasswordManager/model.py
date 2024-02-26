@@ -1,35 +1,37 @@
 import time
-
 import pyperclip
 import threading
 from service import Service
 
 
 class Model:
-    _serviceList = []
-    _thread1 : threading
+    __service_list = []
+    __thread1 : threading
 
     def __init__(self):
-        self._serviceList = []
-
+        self.__service_list = []
 
     @property
-    def serviceList(self) -> list:
-        return self._serviceList
+    def service_list(self) -> list:
+        return self.__service_list
 
     def add_entry(self, service, username, password, domain):
-        self._serviceList.append(Service(service, username, password, domain))
+        self.__service_list.append(Service(service, username, password, domain))
 
     def copy_domain_to_clipboard(self, index):
-        domain = self._serviceList[index[0]].domain
+        domain = self.__service_list[index[0]].domain
         pyperclip.copy(domain)
 
     def copy_password_to_clipboard(self, index):
-        password = self._serviceList[index[0]].password
+        password = self.__service_list[index[0]].password
         pyperclip.copy(password)
-        self._thread1 = threading.Thread(target=self._delete_password_from_clipboard)
-        self._thread1.start()
+        self.__thread1 = threading.Thread(target=self.__delete_password_from_clipboard)
+        self.__thread1.start()
 
-    def _delete_password_from_clipboard(self):
+    def __delete_password_from_clipboard(self):
         time.sleep(20)
         pyperclip.copy('')
+
+    def copy_username_to_clipboard(self, index):
+        username = self.__service_list[index[0]].username
+        pyperclip.copy(username)
