@@ -9,12 +9,19 @@ class DBController(object):
 
     def load_services(self):
         cursor = self.__connection.cursor()
-        cursor.execute('SELECT * FROM services')
+        cursor.execute('SELECT service, username, password, domain FROM services')
         rows = cursor.fetchall()
         cursor.close()
-        return rows
+        self.__service_list = []
+        for row in rows:
+            service = Service(row[0], row[1], row[2], row[3])
+            self.__service_list.append(service)
+        return self.__service_list
 
     def add_service(self, service : Service):
         cursor = self.__connection.cursor()
         cursor.execute('INSERT INTO services(service, username, password, domain) VALUES (?,?,?,?)', (service.service, service.username, service.password, service.domain))
         cursor.close()
+
+    def commit_services(self):
+        self.__connection.commit()

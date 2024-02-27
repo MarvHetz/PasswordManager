@@ -41,3 +41,6 @@ class Model:
     def copy_username_to_clipboard(self, index):
         username = self.__service_list[index[0]].username
         pyperclip.copy(username)
+
+    def commit(self):
+        self.__dbcontroller.commit_services()

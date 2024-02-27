@@ -40,3 +40,6 @@ class Controller(ViewListener):
             self.__model.copy_username_to_clipboard(index)
         else:
             messagebox.showerror("Error", "Please select a service.")
+
+    def on_close(self):
+        self.__model.commit()
