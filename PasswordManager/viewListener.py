@@ -16,3 +16,7 @@ class ViewListener(ABC):
     @abstractmethod
     def on_ctrl_c(self, index):
         pass
+
+    @abstractmethod
+    def on_close(self):
+        pass

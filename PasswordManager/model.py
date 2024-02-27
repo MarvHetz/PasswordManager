@@ -12,14 +12,17 @@ class Model:
 
     def __init__(self):
         self.__service_list = []
-        self.__dbcontroller = DBController.get_instance()
+        self.__dbcontroller = DBController()
+        self.__service_list = self.__dbcontroller.load_services()
 
     @property
     def service_list(self) -> list:
         return self.__service_list
 
     def add_entry(self, service, username, password, domain):
-        self.__service_list.append(Service(service, username, password, domain))
+        service = Service(service, username, password, domain)
+        self.__service_list.append(service)
+        self.__dbcontroller.add_service(service)
 
     def copy_domain_to_clipboard(self, index):
         domain = self.__service_list[index[0]].domain

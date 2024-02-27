@@ -8,6 +8,7 @@ class View:
     def __init__(self, master, serviceList):
         self.master = master
         self.master.title("Password Manager")
+        self.master.protocol("WM_DELETE_WINDOW", self.__on_close)
 
         self.label_domain = tk.Label(master, text="Domain:")
         self.label_domain.grid(row=0, column=0, padx=5, pady=5, sticky="e")
@@ -74,3 +75,8 @@ class View:
     def __on_control_u(self):
         selected_index = self.listbox_services.curselection()
         self.__listener.on_ctrl_c(selected_index)
+
+    def __on_close(self):
+        self.__listener.on_close()
+        self.master.quit()
+        self.master.destroy()

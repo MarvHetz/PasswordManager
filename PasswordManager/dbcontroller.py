@@ -1,20 +1,20 @@
 import sqlite3
+from service import Service
 
 
 class DBController(object):
-    __instance = None
-    __connection = None
-
     def __init__(self):
-        raise RuntimeError('Call instance() instead')
-
-    @classmethod
-    def get_instance(cls):
-        if cls.__instance is None:
-            cls.__instance = cls.__new__(cls)
-        return cls.__instance
-
-    def __new__(cls, *args, **kwargs):
-        cls.__connection = sqlite3.connect('services.db')
+        self.__connection = sqlite3.connect('services.db')
 
 
+    def load_services(self):
+        cursor = self.__connection.cursor()
+        cursor.execute('SELECT * FROM services')
+        rows = cursor.fetchall()
+        cursor.close()
+        return rows
+
+    def add_service(self, service : Service):
+        cursor = self.__connection.cursor()
+        cursor.execute('INSERT INTO services(service, username, password, domain) VALUES (?,?,?,?)', (service.service, service.username, service.password, service.domain))
+        cursor.close()
