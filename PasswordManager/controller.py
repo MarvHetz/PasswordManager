@@ -43,3 +43,10 @@ class Controller(ViewListener):
 
     def on_close(self):
         self.__model.commit()
+
+    def on_backspace(self, index):
+        if index:
+            self.__model.delete_service(index)
+            self.__view.update_listbox(self.__model.service_list)
+        else:
+            messagebox.showerror("Error", "Please select a service.")

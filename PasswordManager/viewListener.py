@@ -20,3 +20,7 @@ class ViewListener(ABC):
     @abstractmethod
     def on_close(self):
         pass
+
+    @abstractmethod
+    def on_backspace(self, index):
+        pass

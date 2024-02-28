@@ -1,3 +1,4 @@
 from controller import Controller
+from dbcontroller import DBController
 
-test = Controller()
+program = Controller()

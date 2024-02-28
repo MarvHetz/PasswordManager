@@ -48,7 +48,9 @@ class View:
         self.listbox_services.grid(row=1, column=2, rowspan=4, padx=5, pady=5, sticky="nsew")
         self.listbox_services.bind("<Control-d>", lambda x: self.__on_control_d())
         self.listbox_services.bind("<Double-Button-1>", lambda x: self.__on_double_click())
-        self.listbox_services.bind("<Control-u>", lambda x: self.__on_control_d())
+        self.listbox_services.bind("<Control-u>", lambda x: self.__on_control_u())
+        self.listbox_services.bind("<BackSpace>", lambda x: self.__on_backspace())
+
 
     def __on_control_d(self):
         selected_index = self.listbox_services.curselection()
@@ -80,3 +82,7 @@ class View:
         self.__listener.on_close()
         self.master.quit()
         self.master.destroy()
+
+    def __on_backspace(self):
+        selected_index = self.listbox_services.curselection()
+        self.__listener.on_backspace(selected_index)

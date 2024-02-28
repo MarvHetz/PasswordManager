@@ -44,3 +44,9 @@ class Model:
 
     def commit(self):
         self.__dbcontroller.commit_services()
+
+    def delete_service(self, index):
+        service = self.__service_list[index[0]]
+        self.__service_list.remove(service)
+        self.__dbcontroller.delete_service(service)
+
