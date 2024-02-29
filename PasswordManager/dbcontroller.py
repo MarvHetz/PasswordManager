@@ -38,3 +38,6 @@ class DBController(metaclass=DBControllerMeta):
         cursor = self.__connection.cursor()
         cursor.execute('DELETE FROM services WHERE service = ? and domain = ? and username = ? and password = ?', (service.service, service.domain, service.username, service.password))
         cursor.close()
+
+    def rollback(self):
+        self.__connection.rollback()
