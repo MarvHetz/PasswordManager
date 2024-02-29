@@ -20,6 +20,7 @@ class Controller(ViewListener):
         if service and username and password and domain:
            self.__model.add_entry(service, username, password, domain)
            self.__view.update_listbox(self.__model.service_list)
+           self.__view.empty_entries()
         else:
             messagebox.showinfo("ERROR", "ERROR!")
 
@@ -42,7 +43,11 @@ class Controller(ViewListener):
             messagebox.showerror("Error", "Please select a service.")
 
     def on_close(self):
-        self.__model.commit()
+        if self.__model.made_changes:
+            if messagebox.askyesno("Save Changes", "Do you want to save the changes before closing?"):
+                self.__model.commit()
+            else:
+                self.__model.rollback()
 
     def on_backspace(self, index):
         if index:

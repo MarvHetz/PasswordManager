@@ -74,6 +74,12 @@ class View:
     def update_listbox(self, service_list):
         self.__listbox_listvar.set(service_list)
 
+    def empty_entries(self):
+        self.entry_service.delete(0, tk.END)
+        self.entry_username.delete(0, tk.END)
+        self.entry_password.delete(0, tk.END)
+        self.entry_domain.delete(0, tk.END)
+
     def __on_control_u(self):
         selected_index = self.listbox_services.curselection()
         self.__listener.on_ctrl_c(selected_index)
